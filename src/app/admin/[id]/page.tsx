@@ -78,28 +78,34 @@ export default function EditBikePage() {
     router.push("/admin");
   }
 
+  const inputClass =
+    "w-full bg-garage-black border border-garage-border rounded-md px-3 py-2.5 text-sm font-body placeholder:text-garage-muted focus:outline-none focus:border-garage-accent transition-colors";
+
   if (loadingData) {
-    return <main style={{ padding: "40px" }}>Loading...</main>;
+    return (
+      <main className="max-w-lg mx-auto px-6 py-16">
+        <p className="font-body text-garage-muted">Loading...</p>
+      </main>
+    );
   }
 
   return (
-    <main style={{ padding: "40px", maxWidth: "500px" }}>
-      <h1
-        style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "20px" }}
-      >
+    <main className="max-w-lg mx-auto px-6 py-16">
+      <p className="font-data text-xs tracking-[0.3em] text-garage-accent uppercase mb-2">
+        Admin
+      </p>
+      <h1 className="font-display text-4xl font-bold uppercase tracking-tight mb-8">
         Edit Bike
       </h1>
 
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "12px" }}
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input
           name="name"
           placeholder="Name"
           value={form.name}
           onChange={handleChange}
           required
+          className={inputClass}
         />
         <input
           name="brand"
@@ -107,6 +113,7 @@ export default function EditBikePage() {
           value={form.brand}
           onChange={handleChange}
           required
+          className={inputClass}
         />
         <input
           name="modelYear"
@@ -114,6 +121,7 @@ export default function EditBikePage() {
           value={form.modelYear}
           onChange={handleChange}
           required
+          className={inputClass}
         />
         <input
           name="category"
@@ -121,6 +129,7 @@ export default function EditBikePage() {
           value={form.category}
           onChange={handleChange}
           required
+          className={inputClass}
         />
         <input
           name="engineCc"
@@ -128,36 +137,42 @@ export default function EditBikePage() {
           value={form.engineCc}
           onChange={handleChange}
           required
+          className={inputClass}
         />
         <input
           name="powerHp"
           placeholder="Power (HP)"
           value={form.powerHp}
           onChange={handleChange}
+          className={inputClass}
         />
         <input
           name="torqueNm"
           placeholder="Torque (Nm)"
           value={form.torqueNm}
           onChange={handleChange}
+          className={inputClass}
         />
         <input
           name="topSpeedKmh"
           placeholder="Top Speed (km/h)"
           value={form.topSpeedKmh}
           onChange={handleChange}
+          className={inputClass}
         />
         <input
           name="weightKg"
           placeholder="Weight (kg)"
           value={form.weightKg}
           onChange={handleChange}
+          className={inputClass}
         />
         <input
           name="price"
           placeholder="Price"
           value={form.price}
           onChange={handleChange}
+          className={inputClass}
         />
         <textarea
           name="description"
@@ -166,9 +181,15 @@ export default function EditBikePage() {
           onChange={handleChange}
           required
           rows={4}
+          className={inputClass}
         />
 
-        <select name="status" value={form.status} onChange={handleChange}>
+        <select
+          name="status"
+          value={form.status}
+          onChange={handleChange}
+          className={inputClass}
+        >
           <option value="draft">Draft</option>
           <option value="published">Published</option>
         </select>
@@ -176,7 +197,7 @@ export default function EditBikePage() {
         <button
           type="submit"
           disabled={loading}
-          style={{ padding: "10px", marginTop: "8px" }}
+          className="font-body text-sm px-5 py-3 rounded-md bg-garage-accent text-garage-black font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 mt-2"
         >
           {loading ? "Saving..." : "Save Changes"}
         </button>
@@ -184,12 +205,7 @@ export default function EditBikePage() {
 
       <button
         onClick={handleDelete}
-        style={{
-          padding: "10px",
-          marginTop: "16px",
-          color: "red",
-          border: "1px solid red",
-        }}
+        className="font-body text-sm w-full mt-4 px-5 py-3 rounded-md border border-garage-accent text-garage-accent hover:bg-garage-accent hover:text-garage-black transition-colors"
       >
         Delete Bike
       </button>

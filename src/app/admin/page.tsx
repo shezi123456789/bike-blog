@@ -1,80 +1,88 @@
 import { prisma } from "@/lib/prisma";
+import Link from "next/link";
 
-export default async function Home() {
+export default async function AdminPage() {
   const bikes = await prisma.bike.findMany({
-    where: { status: "published" },
     orderBy: { createdAt: "desc" },
   });
 
   return (
     <main className="max-w-5xl mx-auto px-6 py-16">
-      <header className="mb-12 border-b border-garage-border pb-8">
-        <p className="font-data text-xs tracking-[0.3em] text-garage-accent uppercase mb-2">
-          Est. Garage Archive
-        </p>
-        <h1 className="font-display text-5xl md:text-6xl font-bold tracking-tight uppercase">
-          Bike Blog
-        </h1>
-        <p className="font-body text-garage-muted mt-3 max-w-md">
-          Specs, stories, and everything worth knowing before you throw a leg
-          over.
-        </p>
-      </header>
+      <div className="flex items-center justify-between mb-10 border-b border-garage-border pb-6">
+        <div>
+          <p className="font-data text-xs tracking-[0.3em] text-garage-accent uppercase mb-2">
+            Admin
+          </p>
+          <h1 className="font-display text-4xl font-bold uppercase tracking-tight">
+            Bikes
+          </h1>
+        </div>
+        <Link
+          href="/admin/new"
+          className="font-body text-sm px-5 py-2.5 rounded-md bg-garage-accent text-garage-black font-semibold hover:opacity-90 transition-opacity"
+        >
+          + Add New Bike
+        </Link>
+      </div>
 
       {bikes.length === 0 ? (
         <p className="font-body text-garage-muted">
-          No bikes published yet. Check back soon.
+          No bikes yet. Add your first one.
         </p>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2">
-          {bikes.map((bike) => (
-            <article
-              key={bike.id}
-              className="border border-garage-border rounded-lg overflow-hidden bg-garage-surface hover:border-garage-accent transition-colors"
-            >
-              <div className="p-5">
-                <span className="font-data text-[10px] tracking-[0.2em] text-garage-accent uppercase">
-                  {bike.category}
-                </span>
-                <h2 className="font-display text-2xl font-semibold uppercase mt-1">
-                  {bike.brand} {bike.name}
-                </h2>
-                <p className="font-body text-sm text-garage-muted mt-1">
-                  {bike.modelYear}
-                </p>
-                <p className="font-body text-sm mt-3 leading-relaxed">
-                  {bike.description}
-                </p>
-              </div>
-
-              <div className="grid grid-cols-3 border-t border-garage-border font-data text-center">
-                <div className="p-3 border-r border-garage-border">
-                  <p className="text-[10px] text-garage-muted uppercase tracking-wider">
-                    Engine
-                  </p>
-                  <p className="text-sm font-semibold mt-1">
-                    {bike.engineCc}cc
-                  </p>
-                </div>
-                <div className="p-3 border-r border-garage-border">
-                  <p className="text-[10px] text-garage-muted uppercase tracking-wider">
-                    Power
-                  </p>
-                  <p className="text-sm font-semibold mt-1">
-                    {bike.powerHp ? `${bike.powerHp}hp` : "—"}
-                  </p>
-                </div>
-                <div className="p-3">
-                  <p className="text-[10px] text-garage-muted uppercase tracking-wider">
-                    Top Speed
-                  </p>
-                  <p className="text-sm font-semibold mt-1">
-                    {bike.topSpeedKmh ? `${bike.topSpeedKmh}km/h` : "—"}
-                  </p>
-                </div>
-              </div>
-            </article>
-          ))}
+        <div className="border border-garage-border rounded-lg overflow-hidden">
+          <table className="w-full font-body text-sm">
+            <thead>
+              <tr className="bg-garage-surface text-left border-b border-garage-border">
+                <th className="p-4 font-data text-xs uppercase tracking-wider text-garage-muted">
+                  Name
+                </th>
+                <th className="p-4 font-data text-xs uppercase tracking-wider text-garage-muted">
+                  Brand
+                </th>
+                <th className="p-4 font-data text-xs uppercase tracking-wider text-garage-muted">
+                  Year
+                </th>
+                <th className="p-4 font-data text-xs uppercase tracking-wider text-garage-muted">
+                  Status
+                </th>
+                <th className="p-4 font-data text-xs uppercase tracking-wider text-garage-muted">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {bikes.map((bike) => (
+                <tr
+                  key={bike.id}
+                  className="border-b border-garage-border last:border-0 hover:bg-garage-surface/50 transition-colors"
+                >
+                  <td className="p-4">{bike.name}</td>
+                  <td className="p-4 text-garage-muted">{bike.brand}</td>
+                  <td className="p-4 text-garage-muted">{bike.modelYear}</td>
+                  <td className="p-4">
+                    <span
+                      className={`font-data text-[10px] uppercase tracking-wider px-2 py-1 rounded ${
+                        bike.status === "published"
+                          ? "bg-garage-accent/20 text-garage-accent"
+                          : "bg-garage-border text-garage-muted"
+                      }`}
+                    >
+                      {bike.status}
+                    </span>
+                  </td>
+                  <td className="p-4">
+                    <Link
+                      href={`/admin/${bike.id}`}
+                      className="text-garage-accent hover:underline"
+                    >
+                      Edit
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </main>
