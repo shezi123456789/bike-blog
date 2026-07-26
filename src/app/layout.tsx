@@ -19,7 +19,7 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "Bike Blog",
+  title: "MotoMatrix",
   description: "Technical specs, reviews, and rides.",
 };
 

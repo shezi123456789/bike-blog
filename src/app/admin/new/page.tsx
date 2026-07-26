@@ -8,6 +8,7 @@ export default function NewBikePage() {
   const [loading, setLoading] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiQuery, setAiQuery] = useState("");
+
   const [form, setForm] = useState({
     name: "",
     brand: "",
@@ -20,6 +21,7 @@ export default function NewBikePage() {
     weightKg: "",
     price: "",
     description: "",
+    imageUrl: "",
   });
 
   function handleChange(
@@ -45,7 +47,8 @@ export default function NewBikePage() {
         return;
       }
 
-      setForm({
+      setForm((prev) => ({
+        ...prev,
         name: data.name ?? "",
         brand: data.brand ?? "",
         modelYear: data.modelYear ? String(data.modelYear) : "",
@@ -57,7 +60,7 @@ export default function NewBikePage() {
         weightKg: data.weightKg ? String(data.weightKg) : "",
         price: data.price ? String(data.price) : "",
         description: data.description ?? "",
-      });
+      }));
     } catch (err) {
       alert("Something went wrong calling the AI.");
     } finally {
@@ -187,6 +190,13 @@ export default function NewBikePage() {
           name="price"
           placeholder="Price - optional"
           value={form.price}
+          onChange={handleChange}
+          className={inputClass}
+        />
+        <input
+          name="imageUrl"
+          placeholder="Image URL - optional (paste a link)"
+          value={form.imageUrl}
           onChange={handleChange}
           className={inputClass}
         />
