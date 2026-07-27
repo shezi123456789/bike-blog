@@ -26,7 +26,7 @@ export default async function BikeDetailPage({
         ← Back to all bikes
       </Link>
 
-      <div className="mt-6 mb-10 border-b border-garage-border pb-8">
+      <div className="mt-6 mb-8">
         <span className="font-data text-xs tracking-[0.2em] text-garage-accent uppercase">
           {bike.category}
         </span>
@@ -36,9 +36,22 @@ export default async function BikeDetailPage({
         <p className="font-body text-garage-muted mt-2">{bike.modelYear}</p>
       </div>
 
-      <p className="font-body text-base leading-relaxed mb-10">
-        {bike.description}
-      </p>
+      {bike.imageUrl && (
+        <div className="mb-10 rounded-lg overflow-hidden border border-garage-border bg-garage-surface">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={bike.imageUrl}
+            alt={`${bike.brand} ${bike.name}`}
+            className="w-full max-h-[420px] object-cover"
+          />
+        </div>
+      )}
+
+      <div className="border-b border-garage-border pb-8 mb-10">
+        <p className="font-body text-base leading-relaxed">
+          {bike.description}
+        </p>
+      </div>
 
       <div>
         <h2 className="font-data text-xs tracking-[0.2em] text-garage-accent uppercase mb-4">
