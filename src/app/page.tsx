@@ -5,6 +5,11 @@ export default async function Home() {
   const bikes = await prisma.bike.findMany({
     where: { status: "published" },
     orderBy: { createdAt: "desc" },
+    include: {
+      _count: {
+        select: { comments: true },
+      },
+    },
   });
 
   return (
@@ -57,6 +62,10 @@ export default async function Home() {
                   <p className="font-body text-sm mt-3 leading-relaxed">
                     {bike.description}
                   </p>
+                  <div className="mt-4 inline-flex items-center rounded-full border border-garage-border px-3 py-1 text-xs uppercase tracking-[0.2em] text-garage-muted">
+                    {bike._count.comments}{" "}
+                    {bike._count.comments === 1 ? "comment" : "comments"}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-3 border-t border-garage-border font-data text-center">

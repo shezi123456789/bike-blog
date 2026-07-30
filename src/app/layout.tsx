@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import "./globals.css";
+import AuthButton from "./components/AuthButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-garage-black text-garage-text">
+        <div className="border-b border-garage-border">
+          <div className="max-w-5xl mx-auto px-6 py-3 flex justify-end">
+            <AuthButton />
+          </div>
+        </div>
         {children}
       </body>
     </html>
