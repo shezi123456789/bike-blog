@@ -60,6 +60,9 @@ If you are not confident about a numeric field, use null rather than guessing. R
   } catch (err: any) {
     // Return the provider error message to aid debugging (safe in preview but avoid leaking in production)
     const message = err?.message || String(err);
-    return NextResponse.json({ error: "AI provider error", message }, { status: 500 });
+    return NextResponse.json(
+      { error: "AI provider error", message },
+      { status: 500 },
+    );
   }
 }
